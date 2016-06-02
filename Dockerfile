@@ -1,16 +1,11 @@
 FROM continuumio/anaconda
 
-RUN mkdir /code
+RUN mkdir -p /code
 WORKDIR /code
 
 RUN apt-get update && apt-get install -yy \
-  libgomp1
+  build-essential \
+  git
 
-RUN conda config --add channels synthicity
-RUN conda install -y \
-  brewer2mpl \
-  matplotlib \
-  numpy \
-  pandana \
-  pandas \
-  pytables
+RUN git clone https://github.com/UDST/pandana.git
+RUN cd pandana && python setup.py install
